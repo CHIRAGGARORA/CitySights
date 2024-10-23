@@ -14,18 +14,37 @@ struct Business: Decodable, Identifiable {
     var alias: String?
     var categories: [Category]
     var coordinates: Coordinate?
-    var display_phone: String?
+    var displayPhone: String?
     var distance: Double?
-    var image_url: String?
-    var is_closed: Bool?
+    var imageUrl: String?
+    var isClosed: Bool?
     var location: Location?
     var name: String?
     var phone: String?
     var price: String?
     var url: String?
     var rating: Double?
-    var review_count: Int?
+    var reviewCount: Int?
     
+    enum CodingKeys: String, CodingKey { // Have to specify all the properties mapped or not doesnt matter
+        
+        case displayPhone = "display_phone"
+        case imageUrl = "image_url"
+        case isClosed = "is_closed"
+        case reviewCount = "review_count"
+        
+        case id
+        case alias
+        case categories
+        case coordinates
+        case distance
+        case location
+        case name
+        case phone
+        case price
+        case url
+        case rating
+    }
 }
 
 
@@ -41,8 +60,21 @@ struct Location: Decodable {
     var address3: String?
     var city: String?
     var country: String?
-    var display_address: [String]?
+    var displayAddress: [String]?
     var state: String?
-    var zip_code: String?
+    var zipCode: String?
+    
+    enum CodingKeys: String, CodingKey {
+        
+        case displayAddress = "display_address"
+        case zipCode = "zip_code"
+        
+        case address1
+        case address2
+        case address3
+        case city
+        case country
+        case state
+    }
     
 }
