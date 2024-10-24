@@ -59,7 +59,7 @@ struct BusinessDetailView: View {
                     Text("\(business?.location?.state ?? "") \(business?.location?.zipCode ?? ""), \(business?.location?.country ?? "")")
                         .padding(.bottom, 10)
                     
-                    Image("regular_\(business?.rating ?? 0)")
+                    Image("regular_\(round(business?.rating ?? 0))")
                         .padding(.bottom, 16)
                     
                     Divider()

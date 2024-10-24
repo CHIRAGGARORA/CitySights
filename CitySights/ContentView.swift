@@ -20,7 +20,7 @@ struct ContentView: View {
             HStack {
                 TextField("What are you looking for?", text: $query)
                 Button {
-                    
+                    // TODO 
                 } label: {
                     Text("Go")
                         .padding(.horizontal)
