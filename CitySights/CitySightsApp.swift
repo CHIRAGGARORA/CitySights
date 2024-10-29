@@ -14,7 +14,7 @@ struct CitySightsApp: App {
     
     var body: some Scene {
         WindowGroup {
-            HomeView()
+            HomeView() // root view
                 .environment(businessModel)
         }
     }
