@@ -65,9 +65,12 @@ class BusinessModel: NSObject, CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         // Most recent (last) location in array is our Location
         
-        currentUserLocation = locations.last?.coordinate
-        
-        if currentUserLocation != nil {
+        if currentUserLocation == nil {
+            
+            // didUpdateLocation is fired multiple times but we dont want to call yelp api multiple times so if userLocation is nil then we will update user location and only that one time yelp api will be called
+            
+            currentUserLocation = locations.last?.coordinate
+            
             // Call BusinessSearch
             getBusinesses()
         }
