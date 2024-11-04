@@ -18,8 +18,26 @@ struct BusinessDetailView: View {
         VStack (spacing: 0) {
             
             ZStack (alignment: .trailing) {
-                Image("detail-placeholder-image")
-                    .resizable()
+                
+                if let imageUrl = business?.imageUrl {
+                    AsyncImage(url: URL(string: imageUrl)!) { image in
+                        image
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .frame(height: 164)
+                            .clipped()
+                        
+                    } placeholder: {
+                        ProgressView()
+                            .frame(width: 50, height: 50)
+                    }
+
+                }
+                else {
+                 
+                    Image("detail-placeholder-image")
+                        .resizable()
+                }
                 
                 VStack {
                     Spacer()
