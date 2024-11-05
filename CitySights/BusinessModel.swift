@@ -14,7 +14,6 @@ class BusinessModel: NSObject, CLLocationManagerDelegate {
     // NSObject is parent class now so BusinessModel is sub class so override init has to be used
     
     var businesses = [Business]()
-    var query: String = ""
     var selectedBusiness: Business?
     
     var service = DataService()
@@ -28,10 +27,13 @@ class BusinessModel: NSObject, CLLocationManagerDelegate {
         locationManager.delegate = self
     }
     
-    func getBusinesses() {
+    func getBusinesses(query: String?, options: String?, category: String?) {
         
         Task {
-            businesses = await service.businessSearch(userLocation: currentUserLocation)
+            businesses = await service.businessSearch(userLocation: currentUserLocation,
+                                                      query: query,
+                                                      options: options,
+                                                      category: category)
         }
         
     }
@@ -72,7 +74,7 @@ class BusinessModel: NSObject, CLLocationManagerDelegate {
             currentUserLocation = locations.last?.coordinate
             
             // Call BusinessSearch
-            getBusinesses()
+            getBusinesses(query: nil, options: nil, category: nil)
         }
         
         manager.stopUpdatingLocation()

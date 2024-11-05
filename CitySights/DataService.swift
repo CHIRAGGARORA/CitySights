@@ -12,7 +12,7 @@ struct DataService {
     
     let apiKey = Bundle.main.infoDictionary?["API_KEY"] as? String
     
-    func businessSearch(userLocation: CLLocationCoordinate2D?) async -> [Business]  {
+    func businessSearch(userLocation: CLLocationCoordinate2D?, query: String?, options: String?, category: String?) async -> [Business]  {
         
         // check if API_KEY exists
         guard apiKey != nil else {
@@ -29,8 +29,28 @@ struct DataService {
             long = userLocation.longitude
         }
         
+        var endpointUrlString = "https://api.yelp.com/v3/businesses/search?latitude=\(lat)&longitude=\(long)&limit=10"
+        
+        // Add query
+        if query != nil && query != "" {
+            endpointUrlString.append("&term=\(query!.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)")
+            // it will convert spaces to %20 and so on conversions
+        }
+        
+        // Add options
+        if options != nil && options != "" {
+            endpointUrlString.append("&attributes=\(options!)")
+        }
+        
+        
+        // Add category
+        if let category = category {
+            endpointUrlString.append("&category=\(category)")
+        }
+        
+        
         // 1) URL
-        if let url = URL(string: "https://api.yelp.com/v3/businesses/search?latitude=\(lat)&longitude=\(long)&categories=restaurants&limit=10") {
+        if let url = URL(string: endpointUrlString) {
             
             
             // 2) URL Request
