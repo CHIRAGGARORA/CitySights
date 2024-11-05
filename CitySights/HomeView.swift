@@ -93,7 +93,24 @@ struct HomeView: View {
             .padding(.horizontal)
             
             // Show map or list
-            if selectedtab == 1 {
+            if businessModel.locationAuthStatus == .denied {
+                Spacer()
+                Text("Please allow locations services for app to see sights near you!")
+                    .padding(.horizontal)
+                Button {
+                    
+                    if let url = URL(string: UIApplication.openSettingsURLString) {
+                        UIApplication.shared.open(url) // Open Settings
+                    }
+                    
+                } label: {
+                    Text("Open App Privacy settings")
+                }
+                .buttonStyle(.bordered)
+
+                Spacer()
+            }
+            else if selectedtab == 1 {
                 mapView()
                     .onTapGesture {
                         withAnimation{
@@ -113,9 +130,6 @@ struct HomeView: View {
             }
             
         }
-        .onAppear(perform: {
-            businessModel.getBusinesses(query: nil, options: nil, category: nil)
-        })
         .sheet(item: $businessModel.selectedBusiness) { item in
             BusinessDetailView()
         }
